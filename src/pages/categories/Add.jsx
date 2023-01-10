@@ -16,15 +16,14 @@ function Add() {
     formData.append("l_ten", data.l_ten);
     formData.append("l_hinh", data.l_hinh);
 
-    if (form.checkValidity()) {
-      await categoriesApi.post(formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("Thêm loại thành công");
-      navigate("/categories");
-    }
+    await categoriesApi.post(formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert("Thêm loại thành công");
+    navigate("/categories");
   };
 
   return (

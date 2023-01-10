@@ -10,22 +10,26 @@ function Price() {
   const [price, setPrice] = useState("");
   const [capacityId, setCapacityId] = useState("");
   const [capacities, setCapacities] = useState([]);
+  const [prices, setPrices] = useState([]);
 
   useEffect(() => {
     const fetchApi = async () => {
-      const getCapacities = await productsApi.get(id);
-      setCapacities(getCapacities.products[0].dungluongs);
+      const getProduct = await productsApi.get(id);
+      setCapacities(getProduct.products[0].dungluongs);
+      setPrices(getProduct.products[0].giatiens)
     };
     fetchApi();
   }, [id]);
 
   useEffect(() => {
-      setPrice(capacities[parseInt(selected)]?.giatien.gt_gia);
-  }, [capacities, selected]);
+      setPrice(prices[parseInt(selected)]?.gt_gia);
+  }, [prices, selected]);
 
   useEffect(() => {
-    setCapacityId(String(capacities[0]?.dl_id))
-  }, [capacities])
+    // setCapacityId(String(capacities[0]?.dl_id))
+    setCapacityId(String(prices[0]?.dungluong?.dl_id))
+  }, [prices])
+  console.log(capacityId);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,9 +61,9 @@ function Price() {
                   setCapacityId(e.target.value);
                 }}
               >
-                {capacities.map((capacity, index) => (
-                  <option key={index} value={capacity.dl_id}>
-                    {capacity.dl_dungluong}
+                 {prices.map((price, index) => (
+                  <option key={index} value={price.dungluong?.dl_id}>
+                    {price.dungluong?.dl_dungluong}
                   </option>
                 ))}
               </select>
@@ -72,7 +76,7 @@ function Price() {
                 name="product"
                 placeholder="Nhập giá sản phẩm"
                 type="text"
-                defaultValue={capacities[parseInt(selected)]?.giatien.gt_gia}
+                defaultValue={prices[parseInt(selected)]?.gt_gia}
                 required
                 onChange={(e) => {
                   setPrice(e.target.value);
@@ -81,7 +85,7 @@ function Price() {
             </FormGroup>
 
             <Button color="primary" block>
-              cập nhật
+              Cập nhật
             </Button>
           </Form>
         </Col>

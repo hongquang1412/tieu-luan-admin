@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Table, Button } from "reactstrap";
-import { BiEdit } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import * as categoriesApi from "../../api/categoriesApi";
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -31,17 +29,20 @@ function Categories() {
   return (
     <div className="category">
       <div className="category-btn-add">
-        <NavLink to="/categories/add">
-          <Button color="primary">Thêm loại</Button>
+        <NavLink to="/categories/add" className="d-flex justify-content-end text-decoration-none">
+          <Button color="info" className="text-white">Thêm</Button>
         </NavLink>
       </div>
-      <Table>
+      <Table bordered hover>
         <thead>
+        <tr>
+            <th colSpan={4} className="text-center text-white bg-info">Danh sách loại sản phẩm</th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Tên loại</th>
             <th>Hình ảnh</th>
-            <th>Thao tác</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -57,20 +58,22 @@ function Categories() {
                   height="100"
                 />
               </td>
-              <td>
+              <td className="text-center">
                 <NavLink
                   to={`/categories/update/${category.l_id}`}
                   className="border-0 bg-transparent text-black"
                 >
-                  <BiEdit className="fs-4" />
+                  <Button color="info" className="text-white">
+                    Cập nhật
+                  </Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <button
-                  className="border-0 bg-transparent"
+                <Button
+                  color="danger"
                   onClick={() => handleDeleteCategory(category.l_id)}
                 >
-                  <RiDeleteBin6Line className="fs-4" />
-                </button>
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}

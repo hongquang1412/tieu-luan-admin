@@ -6,15 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 function Discount() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [discount, setDiscount] = useState([]);
-  const [percent, setPercent] = useState(0);
+  const [percent, setPercent] = useState("");
   const [startDay, setStartDay] = useState("");
   const [endDay, setEndDay] = useState("");
 
   useEffect(() => {
     const fetchApi = async () => {
       const getDiscount = await discountApi.get(id);
-      setDiscount(getDiscount.discounts[0]);
       setPercent(getDiscount.discounts[0]?.g_phantram);
       setStartDay(getDiscount.discounts[0]?.g_ngaybd);
       setEndDay(getDiscount.discounts[0]?.g_ngaykt);
@@ -41,6 +39,8 @@ function Discount() {
       navigate("/products")
     }
   };
+
+  console.log(percent);
 
   return (
     <div className="discount">

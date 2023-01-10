@@ -40,7 +40,7 @@ function Detail() {
             <strong className="fs-4">Địa chỉ: </strong>
               <ol className="fs-4">
                 {customer.diachis?.map((add, index)=>(
-                  <li>
+                  <li key={index}>
                     <span>
                     {add.dc_diachi}
                     </span>

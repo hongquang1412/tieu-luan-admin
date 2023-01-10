@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route element={<ProtectedRoutes/>}>
+        <Route element={<ProtectedRoutes />}>
           {privateRoutes.map((route, index) => {
             const Layout = route.layout === null ? Fragment : DefaultLayout;
             const Page = route.component;

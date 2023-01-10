@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -8,34 +8,20 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import * as statisticalApi from "../../api/statisticalApi";
 
-const data = [
-  {
-    name: "Tháng 1",
-    total: 2000,
-  },
-  {
-    name: "Tháng 2",
-    total: 7000,
-  },
-  {
-    name: "Tháng 3",
-    total: 5000,
-  },
-  {
-    name: "Tháng 4",
-    total: 1000,
-  },
-  {
-    name: "Tháng 5",
-    total: 6000,
-  },
-  {
-    name: "Tháng 6",
-    total: 9000,
-  },
-];
 export default function Chart() {
+  const [statistical, setStatistical] = useState([]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const getStatistical = await statisticalApi.get();
+      setStatistical(getStatistical.statistical);
+    }
+    fetchApi();
+  }, []);
+
+
   return (
     <div className="chart">
       <div className="chart-title mb-3 fs-4">6 tháng gần đây (doanh thu)</div>
@@ -43,7 +29,7 @@ export default function Chart() {
         <AreaChart
           width={500}
           height={400}
-          data={data}
+          data={statistical}
           margin={{
             top: 10,
             right: 30,
@@ -51,9 +37,9 @@ export default function Chart() {
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" className="chart-grid"/>
-          <XAxis dataKey="name" stroke="gray"/>
-          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
+          <XAxis dataKey="month" stroke="gray" />
+          <YAxis/>
           <Tooltip />
           <Area
             type="monotone"

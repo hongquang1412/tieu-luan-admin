@@ -9,11 +9,14 @@ function Update() {
   const [order, setOrder] = useState([]);
   const [deliveryTime, setDeliveryTime] = useState("");
   const [statusSelected, setStatusSelected] = useState("");
+  const [orderDate, setOrderDate] = useState();
+
   useEffect(() => {
     const fetchApi = async () => {
       const getOrder = await ordersApi.getDetails(id);
       setOrder(getOrder.orders[0]);
       setStatusSelected(getOrder.orders[0]?.dh_trangthai);
+      setOrderDate(new Date(getOrder.orders[0].dh_ngaytao))
       setDeliveryTime(getOrder.orders[0]?.dh_thoigiangh);
     };
     fetchApi();
@@ -58,6 +61,7 @@ function Update() {
                 name="date"
                 placeholder="date placeholder"
                 type="date"
+                min={orderDate?.toISOString().slice(0, 10)}
                 defaultValue={order.dh_thoigiangh}
                 onChange={(e) => {
                   setDeliveryTime(e.target.value);

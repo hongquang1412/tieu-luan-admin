@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
 import moment from "moment";
 import { NavLink, useNavigate } from "react-router-dom";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { BiDetail, BiEdit } from "react-icons/bi";
 import * as ordersApi from "../../api/ordersApi";
 
 function Orders() {
@@ -31,9 +29,13 @@ function Orders() {
 
   return (
     <div className="order">
-      <h3>Danh sách đơn hàng</h3>
-      <Table>
+      <Table bordered hover>
         <thead>
+          <tr>
+            <th colSpan={7} className="text-center text-white bg-info">
+              Danh sách đơn hàng
+            </th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Khách hàng</th>
@@ -41,8 +43,7 @@ function Orders() {
             <th>Thành tiền</th>
             <th>trạng thái đơn</th>
             <th>Thời gian giao hàng</th>
-            <th>Chi tiết</th>
-            <th>Hủy đơn</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -59,30 +60,33 @@ function Orders() {
               </td>
               <td>{order.dh_trangthai}</td>
               <td>
-                {order.dh_thoigiangh ? moment(order.dh_thoigiangh).format("DD-MM-YYYY") : "Đang cập nhật"}
+                {order.dh_thoigiangh
+                  ? moment(order.dh_thoigiangh).format("DD-MM-YYYY")
+                  : "Đang cập nhật"}
               </td>
-              <td>
-                <NavLink
-                  to={`/orders/detail/${order.dh_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiDetail className="fs-4" />
-                </NavLink>
-              </td>
-              <td>
-              <NavLink
-                  to={`/orders/update/${order.dh_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiEdit className="fs-4" />
+              <td className="text-center">
+                <NavLink to={`/orders/detail/${order.dh_id}`}>
+                  <Button color="secondary">Chi tiết</Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <RiDeleteBin6Line
-                  className="fs-4"
-                  onClick={() => {
-                    handleDeleteOrder(order.dh_id);
-                  }}
-                />
+                {order.dh_trangthai !== "Hủy đơn" && (
+                  <>
+                    <NavLink to={`/orders/update/${order.dh_id}`}>
+                      <Button color="info" className="text-white">
+                        Cập nhật
+                      </Button>
+                    </NavLink>
+                    &nbsp; &nbsp;
+                    <Button
+                      color="danger"
+                      onClick={() => {
+                        handleDeleteOrder(order.dh_id);
+                      }}
+                    >
+                      Xóa
+                    </Button>
+                  </>
+                )}
               </td>
             </tr>
           ))}

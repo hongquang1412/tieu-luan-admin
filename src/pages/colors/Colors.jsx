@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { BiEdit } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import * as colorApi from "../../api/colorsApi";
 
 function Colors() {
@@ -30,17 +28,20 @@ function Colors() {
   return (
     <div className="color">
       <div className="color-btn-add">
-        <NavLink to="/colors/add">
-          <Button color="primary">Thêm màu sắc</Button>
+        <NavLink to="/colors/add" className="d-flex justify-content-end text-decoration-none">
+          <Button color="info" className="text-white">Thêm</Button>
         </NavLink>
       </div>
-      <Table>
+      <Table bordered hover>
         <thead>
+        <tr>
+            <th colSpan={4} className="text-center text-white bg-info">Danh sách màu sắc</th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Màu sắc</th>
             <th>Mã màu</th>
-            <th>Thao tác</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,20 +50,21 @@ function Colors() {
               <td>{color.ms_id}</td>
               <td>{color.ms_mau}</td>
               <td>{color.ms_ma}</td>
-              <td>
+              <td className="text-center">
                 <NavLink
                   to={`/colors/update/${color.ms_id}`}
-                  className="border-0 bg-transparent text-black"
                 >
-                  <BiEdit className="fs-4" />
+                 <Button color="info" className="text-white">
+                  Cập nhật
+                 </Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <button
-                  className="border-0 bg-transparent"
+                <Button
+                  color="danger"
                   onClick={() => handleDeleteColor(color.ms_id)}
                 >
-                  <RiDeleteBin6Line className="fs-4" />
-                </button>
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Row, Col } from "reactstrap";
+import moment from "moment";
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from "react-image-gallery";
 import { useParams } from "react-router-dom";
@@ -44,11 +45,7 @@ function Detail() {
             </li>
             <li>
               <strong className="fs-4">Số lượng: </strong>
-              <span className="fs-4">{product.kho?.k_soluong}</span>
-            </li>
-            <li>
-              <strong className="fs-4">Trạng thái: </strong>
-              <span className="fs-4">{product.sp_trangthai}</span>
+              <span className="fs-4">{product.sp_soluong}</span>
             </li>
             <li>
               <strong className="fs-4">Màu sắc:</strong>
@@ -61,20 +58,17 @@ function Detail() {
             <li>
               <strong className="fs-4">Dung lượng:</strong>
               <ol className="fs-4">
-                {product.dungluongs?.map((dungluong) => (
+                {product.giatiens?.map((giatien) => (
                   <li>
-                    <span>{dungluong.dl_dungluong}GB</span>
+                    <span>{giatien.dungluong.dl_dungluong}</span>
                     &nbsp; &nbsp;
                     <span>
                       Giá tiền: &nbsp;
-                      {dungluong.giatien?.gt_gia
-                        ? parseInt(dungluong.giatien?.gt_gia).toLocaleString(
-                            "vi-VN",
-                            {
-                              style: "currency",
-                              currency: "VND",
-                            }
-                          )
+                      {giatien.gt_gia
+                        ? parseInt(giatien.gt_gia).toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          })
                         : "Đang cập nhật"}
                     </span>
                   </li>
@@ -83,7 +77,21 @@ function Detail() {
 
               <li>
                 <strong className="fs-4">Giảm giá: </strong>
-                <span className="fs-4">{product.giam?.g_phantram? `${product.giam?.g_phantram}%`: "Đang cập nhật"}</span>
+                <span className="fs-4">{product.giam?.g_phantram}%</span>
+                <br />
+                {product.giam?.g_phantram !== 0 && (
+                  <>
+                    <strong className="fs-4">Ngày bắt đầu: </strong>
+                    <span className="fs-4">
+                      {moment(product.giam?.g_ngaybd).format("DD-MM-YYYY")}
+                    </span>
+                    <br />
+                    <strong className="fs-4">Ngày kết thúc: </strong>
+                    <span className="fs-4">
+                      {moment(product.giam?.g_ngaykt).format("DD-MM-YYYY")}
+                    </span>
+                  </>
+                )}
               </li>
             </li>
           </ul>

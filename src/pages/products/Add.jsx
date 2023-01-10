@@ -13,8 +13,6 @@ function Add() {
   const [productName, setProductName] = useState("");
   const [images, setImages] = useState([]);
   const [des, setDes] = useState("");
-  const [quantity, setQuantity] = useState();
-  const [status, setStatus] = useState("Còn hàng");
   const [categorySelected, setCategorySelected] = useState(1);
   const [capacitiesSelected, setCapacitiesSelected] = useState([]);
   const [colorsSelected, setColorsSelected] = useState([]);
@@ -29,7 +27,7 @@ function Add() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const getColors = await colorsApi.get();
+      const getColors = await colorsApi.get("", "1", "100");
       setColors(getColors.colors);
     };
     fetchApi();
@@ -47,8 +45,6 @@ function Add() {
   formData.append("sp_ten", productName);
   formData.append("l_id", categorySelected);
   formData.append("sp_mota", des);
-  formData.append("sp_trangthai", status);
-  formData.append("k_soluong", quantity);
   formData.append("colors", JSON.stringify(colorsSelected));
   formData.append("capacities", JSON.stringify(capacitiesSelected));
   const handleSubmit = async (e) => {
@@ -63,10 +59,10 @@ function Add() {
         "Content-Type": "multipart/form-data",
       },
     });
-    // alert("Thêm sản phẩm thành công");
-    // navigate("/products");
+    alert("Thêm sản phẩm thành công");
+    navigate("/products");
   };
-
+console.log("color",colorsSelected);
   return (
     <div className="product">
       <h2>Thêm sản phẩm</h2>
@@ -117,35 +113,6 @@ function Add() {
             </FormGroup>
 
             <FormGroup>
-              <Label for="exampleProduct">Số lượng</Label>
-              <Input
-                id="exampleProduct"
-                name="product"
-                placeholder="Nhập số lượng"
-                type="number"
-                min={0}
-                required
-                onBlur={(e) => {
-                  setQuantity(e.target.value);
-                }}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="exampleSelect">Trạng thái</Label>
-              <select
-                id="exampleSelect"
-                name="select"
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
-              >
-                <option value="Còn hàng">Còn hàng</option>
-                <option value="Hết hàng">Hết hàng</option>
-              </select>
-            </FormGroup>
-
-            <FormGroup>
               <Label for="exampleSelect">Loại</Label>
               <Input
                 id="exampleSelect"
@@ -177,7 +144,7 @@ function Add() {
                       const newSelected = colorsSelected.filter((_) => {
                         return _ !== e.target.value;
                       });
-                      setCapacitiesSelected(newSelected);
+                      setColorsSelected(newSelected);
                     }
                   }}
                 />
@@ -209,7 +176,7 @@ function Add() {
                   }}
                 />
                 <Label check for={capacity.dl_id}>
-                  {`${capacity.dl_dungluong}GB`}
+                  {`${capacity.dl_dungluong}`}
                 </Label>
               </FormGroup>
             ))}

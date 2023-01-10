@@ -25,7 +25,11 @@ import { default as UpdateOrder } from "../pages/orders/Update";
 import Staffs from "../pages/staffs/Staffs";
 import { default as AddStaff } from "../pages/staffs/Add";
 import { default as UpdateStaff } from "../pages/staffs/Update"
-import Statistics from "../pages/statistics/Statistics"
+import Receipts from "../pages/receipts/Receipts";
+import {default as DetailReceipt } from "../pages/receipts/Detail"
+import { default as AddReceipt } from "../pages/receipts/Add"
+
+
 const publicRoutes = [{ path: "/login", component: Login, layout: null }];
 const privateRoutes = [
   { path: "/", component: Home },
@@ -54,6 +58,8 @@ const privateRoutes = [
   { path: "/staffs", component: Staffs },
   { path: "/staffs/add", component: AddStaff },
   { path: "/staffs/update/:id", component: UpdateStaff },
-  { path:"/statistics", component: Statistics },
+  { path:"/receipts", component: Receipts},
+  { path:"/receipts/detail/:id", component: DetailReceipt},
+  { path:"/receipts/add", component: AddReceipt},
 ];
 export { publicRoutes, privateRoutes };

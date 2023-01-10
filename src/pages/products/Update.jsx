@@ -9,7 +9,6 @@ import { useNavigate, useParams } from "react-router-dom";
 function Update() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const productStatus = ["Còn hàng", "Hết hàng"];
   const [product, setProduct] = useState([]);
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
@@ -17,9 +16,8 @@ function Update() {
   const [productName, setProductName] = useState("");
   const [newImages, setNewImages] = useState([]);
   const [des, setDes] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [sold, setSold] = useState("");
-  const [statusSelected, setStatusSelected] = useState("Còn hàng");
+  // const [quantity, setQuantity] = useState("");
+  // const [sold, setSold] = useState("");
   const [categorySelected, setCategorySelected] = useState(1);
   const [capacitiesSelected, setCapacitiesSelected] = useState([]);
   const [colorsSelected, setColorsSelected] = useState([]);
@@ -42,7 +40,7 @@ function Update() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const getColors = await colorsApi.get();
+      const getColors = await colorsApi.get("", "1", "100");
       setColors(getColors.colors);
     };
     fetchApi();
@@ -61,34 +59,10 @@ function Update() {
       setProductName(product.sp_ten);
       setCategorySelected(product.loai);
       setDes(product.sp_mota);
-      setStatusSelected(product.sp_trangthai);
-      setQuantity(product.kho?.k_soluong);
-      setSold(product.kho?.k_daban);
       setColorsSelected(product.mausacs);
-      setCapacitiesSelected(product.dungluongs);
+      setCapacitiesSelected(product.giatiens);
     }
   }, [product]);
-
-  // let files = [];
-  // if (images) {
-  //   images?.map((image) => {
-  //     files = [...files, image];
-  //     return files;
-  //   });
-  // }
-  // console.log("hình ne", images);
-  // console.log("up hình", files);
-
-  let newStatus = [];
-  let check = false;
-  productStatus.forEach((status) => {
-    if (status === statusSelected) {
-      check = true;
-    }
-    if (check) {
-      newStatus.push(status);
-    }
-  });
 
   let newCategories = categories.filter((category) => {
     return category.l_id !== categorySelected?.l_id;
@@ -101,11 +75,8 @@ function Update() {
 
   var newCapacities = [];
   capacitiesSelected?.map((capacity) => {
-    return (newCapacities = [...newCapacities, String(capacity.dl_id)]);
+    return (newCapacities = [...newCapacities, String(capacity.dungluong.dl_id)]);
   });
-
-  console.log(newColors);
-  console.log(newCapacities);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,9 +85,6 @@ function Update() {
     formData.append("sp_ten", productName);
     formData.append("l_id", categorySelected?.l_id);
     formData.append("sp_mota", des);
-    formData.append("sp_trangthai", statusSelected);
-    formData.append("k_soluong", quantity);
-    formData.append("k_daban", sold);
     formData.append("colors", JSON.stringify(newColors));
     formData.append("capacities", JSON.stringify(newCapacities));
     if (newImages.length !== 0) {
@@ -184,61 +152,6 @@ function Update() {
                   setDes(e.target.value);
                 }}
               />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="exampleProduct">Số lượng</Label>
-              <Input
-                id="exampleProduct"
-                name="product"
-                placeholder="Nhập số lượng"
-                type="number"
-                min={0}
-                required
-                defaultValue={quantity}
-                onBlur={(e) => {
-                  setQuantity(e.target.value);
-                }}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="exampleProduct">Đã bán</Label>
-              <Input
-                id="exampleProduct"
-                name="product"
-                placeholder="Nhập số lượng sản phẩm đã bán"
-                type="number"
-                min={0}
-                required
-                defaultValue={sold}
-                onBlur={(e) => {
-                  setSold(e.target.value);
-                }}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="exampleSelect">Trạng thái</Label>
-              <br />
-              <select
-                id="exampleSelect"
-                name="select"
-                onChange={(e) => {
-                  setStatusSelected(e.target.value);
-                }}
-              >
-                <option defaultValue={statusSelected} selected>
-                  {statusSelected}
-                </option>
-                {newStatus.map((status) =>
-                  status !== statusSelected ? (
-                    <option value={status}>{status}</option>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </select>
             </FormGroup>
 
             <FormGroup>

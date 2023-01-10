@@ -34,7 +34,6 @@ function Featured() {
     };
     fetchApi();
   }, []);
-  console.log(lastMonthOrderDetails);
 
   let todayTotalRevenue = 0;
   todayOrderDetails.map((detail) => {
@@ -51,13 +50,11 @@ function Featured() {
     lastMonthTotalRevenue += detail.ctdh_soluong * detail.ctdh_dongia;
   });
 
-  console.log("totalRevenue: ", totalRevenue);
-  console.log("lastMonthTotalRevenue: ", lastMonthTotalRevenue);
-
   const percent =
     lastMonthTotalRevenue !== 0
       ? (totalRevenue - lastMonthTotalRevenue) / lastMonthTotalRevenue
       : 100;
+
   const profit = totalRevenue - lastMonthTotalRevenue;
 
   return (
@@ -83,13 +80,13 @@ function Featured() {
           })}
         </p>
       </div>
-      {/* <h5 className="mt-3 ms-2">Tổng tiền:</h5>
-      <p className="fs-4 ms-2">
+      <h5 className="mt-3 ms-2 text-center">Tổng tiền tháng {month}:</h5>
+      <p className="fs-4 ms-2 text-center">
         {totalRevenue.toLocaleString("VND", {
           style: "currency",
           currency: "VND",
         })}
-      </p> */}
+      </p>
     </div>
   );
 }

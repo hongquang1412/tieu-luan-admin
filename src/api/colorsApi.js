@@ -1,8 +1,8 @@
 import * as request from "./request";
 
-export const get = async (id="") => {
+export const get = async (id = "", start = "", limit = "") => {
   try {
-    const res = await request.get(`colors?ms_id=${id}`);
+    const res = await request.get(`colors?start=${start}&limit=${limit}`);
     return res;
   } catch (error) {
     //todo write log
@@ -27,7 +27,7 @@ export const patch = async (id, data, headers) => {
 
 export const _delete = async (id) => {
   try {
-    await request._delete( `colors/${id}`);
+    await request._delete(`colors/${id}`);
   } catch (error) {
     //todo write log
   }

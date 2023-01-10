@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { Table, Button } from "reactstrap";
-import { BiEdit, BiDetail } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import * as customersApi from "../../api/customersApi";
 function Customers() {
   const [customers, setCustomer] = useState([]);
@@ -29,19 +27,21 @@ function Customers() {
   return (
     <div className="customer">
       <div className="customer-btn-add">
-        <NavLink to="/customers/add">
-          <Button color="primary">Thêm khách hàng</Button>
+        <NavLink to="/customers/add" className="d-flex justify-content-end text-decoration-none">
+          <Button color="info" className="text-white">Thêm</Button>
         </NavLink>
       </div>
-      <Table>
+      <Table bordered hover>
         <thead>
+        <tr>
+            <th colSpan={5} className="text-center text-white bg-info">Danh sách khách hàng</th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Họ tên</th>
             <th>Email</th>
             <th>Số điện thoại</th>
-            <th>Chi tiết</th>
-            <th>Thao tác</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,28 +51,23 @@ function Customers() {
               <td>{customer.kh_hoten}</td>
               <td>{customer.kh_email}</td>
               <td>{customer.kh_sdt}</td>
-              <td>
-                <NavLink
-                  to={`/customers/detail/${customer.kh_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiDetail className="fs-4" />
-                </NavLink>
-              </td>
-              <td>
-                <NavLink
-                  to={`/customers/update/${customer.kh_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiEdit className="fs-4" />
+              <td className="text-center">
+                <NavLink to={`/customers/detail/${customer.kh_id}`}>
+                  <Button color="secondary">Chi tiết</Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <button
-                  className="border-0 bg-transparent"
+                <NavLink to={`/customers/update/${customer.kh_id}`}>
+                  <Button color="info" className="text-white">
+                    Cập nhật
+                  </Button>
+                </NavLink>
+                &nbsp; &nbsp;
+                <Button
+                  color="danger"
                   onClick={() => handleDeleteCustomer(customer.kh_id)}
                 >
-                  <RiDeleteBin6Line className="fs-4" />
-                </button>
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}

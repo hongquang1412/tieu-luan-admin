@@ -27,7 +27,7 @@ export const patch = async (id, data, headers) => {
 
 export const _delete = async (id) => {
   try {
-    await request._delete( `categories/${id}`);
+    await request._delete(`categories/${id}`);
   } catch (error) {
     //todo write log
   }

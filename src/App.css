@@ -3,11 +3,11 @@
   flex: 1;
   border-right: 0.5px solid rgb(231, 228, 288);
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #181824;
 }
 
 .sidebar-top {
-  height: 50px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,37 +15,63 @@
 }
 
 .sidebar-top-logo {
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
 }
 
 .sidebar-center {
   text-decoration: none;
-  padding-left: 10px;
+  padding-top: 15px;
+  /* padding-left: 15px; */
 }
 
 .sidebar-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
-  color: #999;
+  color: #8e94a9;
   margin-top: 15px;
   margin-bottom: 0;
+  padding-left: 15px;
 }
 
-.sidebar-center li {
+.sidebar-link {
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.sidebar-center li:hover {
-  background-color: #ece8ff;
-}
-
-.sidebar-center li span {
-  font-size: 15px;
+.sidebar-link-title {
+  text-decoration: none;
+  font-size: 16px;
   font-weight: 600;
-  color: #888;
+  color: #0dcaf0;
   margin-left: 10px;
+}
+
+.sidebar-link-title-active {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0dcaf0;
+  margin-left: 10px;
+  color: #fff;
+}
+
+.sidebar-link:hover {
+  background-color: #161621;
+}
+
+.sidebar-link a:hover {
+  color: #fff;
+}
+
+.sidebar-link:hover .sidebar-link-title {
+  color: #fff;
 }
 
 /* container */
@@ -56,7 +82,7 @@
 
 /* navbar */
 .navbar {
-  height: 50px;
+  height: 80px;
   border-bottom: 0.5px solid rgb(231, 228, 288);
   font-size: 14px;
   color: #555;
@@ -67,17 +93,7 @@
   display: flex;
   padding: 0 20px;
   justify-content: space-between;
-}
-
-.navbar-wapper-search {
-  display: flex;
   align-items: center;
-  border: 0.5px solid lightgray;
-  padding: 3px;
-}
-
-.navbar-wapper-search input:focus {
-  outline: none;
 }
 
 /* widget */
@@ -210,7 +226,8 @@
 .discount,
 .store,
 .order,
-.staff {
+.staff,
+.receipt {
   padding: 20px;
 }
 
@@ -220,7 +237,8 @@
 .color-btn-add,
 .capacity-btn-add,
 .discount-btn-add,
-.staff-btn-add {
+.staff-btn-add,
+.receipt-btn-add {
   margin-bottom: 10px;
 }
 

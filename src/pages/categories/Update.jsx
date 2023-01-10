@@ -33,15 +33,13 @@ function Update() {
       formData.append("l_hinh", data.l_hinh);
     }
 
-    if (form.checkValidity()) {
-      await categoriesApi.patch(id, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("Cập nhật loại thành công");
-      navigate("/categories");
-    }
+    await categoriesApi.patch(id, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    alert("Cập nhật loại thành công");
+    navigate("/categories");
   };
 
   return (

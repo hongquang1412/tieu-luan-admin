@@ -29,12 +29,22 @@ function Staffs() {
   return (
     <div className="staff">
       <div className="staff-btn-add">
-        <NavLink to="/staffs/add">
-          <Button color="primary">Thêm nhân viên</Button>
+        <NavLink
+          to="/staffs/add"
+          className="d-flex justify-content-end text-decoration-none"
+        >
+          <Button color="info" className="text-white">
+            Thêm
+          </Button>
         </NavLink>
       </div>
-      <Table>
+      <Table bordered hover>
         <thead>
+          <tr>
+            <th colSpan={8} className="text-center text-white bg-info">
+              Danh sách nhân viên
+            </th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Họ tên</th>
@@ -43,7 +53,7 @@ function Staffs() {
             <th>Email</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ</th>
-            <th>Thao tác</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,27 +61,24 @@ function Staffs() {
             <tr key={index}>
               <td>{staff.nv_id}</td>
               <td>{staff.nv_hoten}</td>
-              <td>
-                {staff.nv_gioitinh === 0 ? "Nam": "Nữ"}
-              </td>
+              <td>{staff.nv_gioitinh === 0 ? "Nam" : "Nữ"}</td>
               <td>{moment(staff.nv_ngaysinh).format("DD/MM/YYYY")}</td>
               <td>{staff.nv_email}</td>
               <td>{staff.nv_sdt}</td>
               <td>{staff.nv_diachi}</td>
-              <td>
-                <NavLink
-                  to={`/staffs/update/${staff.nv_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiEdit className="fs-4" />
+              <td className="text-center">
+                <NavLink to={`/staffs/update/${staff.nv_id}`}>
+                  <Button color="info" className="text-white">
+                    Cập nhật
+                  </Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <button
-                  className="border-0 bg-transparent"
+                <Button
+                  color="danger"
                   onClick={() => handleDeleteCustomer(staff.nv_id)}
                 >
-                  <RiDeleteBin6Line className="fs-4" />
-                </button>
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}

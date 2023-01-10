@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Table, Button } from "reactstrap";
-import { BiEdit, BiDetail } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { ImPriceTag } from "react-icons/im";
-import { TbDiscount2 } from "react-icons/tb";
 import * as productsApi from "../../api/productsApi";
 function Products() {
   const [products, setProducts] = useState([]);
@@ -12,7 +8,7 @@ function Products() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const getProducts = await productsApi.get();
+      const getProducts = await productsApi.get("", "1", "100");
       setProducts(getProducts.products);
       setRender(false);
     };
@@ -31,22 +27,22 @@ function Products() {
   return (
     <div className="product">
       <div className="product-btn-add">
-        <NavLink to="/products/add">
-          <Button color="primary">Thêm sản phẩm</Button>
+        <NavLink to="/products/add" className="d-flex justify-content-end text-decoration-none">
+          <Button color="info" className="text-white">Thêm</Button>
         </NavLink>
       </div>
-      <Table>
+      <Table bordered hover>
         <thead>
+          <tr>
+            <th colSpan={6} className="text-center text-white bg-info">Danh sách sản phẩm</th>
+          </tr>
           <tr>
             <th>id</th>
             <th>Tên sản phẩm</th>
             <th>Loại</th>
             <th>Hình ảnh</th>
             <th>Số lượng</th>
-            <th className="text-center">Chi tiết</th>
-            <th className="text-center">Giá tiền</th>
-            <th className="text-center">Giảm giá</th>
-            <th>Thao tác</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -63,45 +59,27 @@ function Products() {
                   height={100}
                 />
               </td>
-              <td>{product.kho?.k_soluong}</td>
+              <td>{product.sp_soluong}</td>
               <td className="text-center">
-                <NavLink
-                  to={`/products/detail/${product.sp_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiDetail className="fs-3" />
-                </NavLink>
-              </td>
-              <td className="text-center">
-                <NavLink
-                  to={`/products/price/${product.sp_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <ImPriceTag className="fs-3" />
-                </NavLink>
-              </td>
-              <td className="text-center">
-                <NavLink
-                  to={`/products/discount/${product.sp_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <TbDiscount2 className="fs-3" />
-                </NavLink>
-              </td>
-              <td>
-                <NavLink
-                  to={`/products/update/${product.sp_id}`}
-                  className="border-0 bg-transparent text-black"
-                >
-                  <BiEdit className="fs-3" />
+                <NavLink to={`/products/detail/${product.sp_id}`}>
+                  <Button>Chi tiết</Button>
                 </NavLink>
                 &nbsp; &nbsp;
-                <button
-                  className="border-0 bg-transparent"
-                  onClick={() => handleDeleteProduct(product.sp_id)}
-                >
-                  <RiDeleteBin6Line className="fs-3" />
-                </button>
+                <NavLink to={`/products/price/${product.sp_id}`}>
+                  <Button color="success">Giá tiền</Button>
+                </NavLink>
+                &nbsp; &nbsp;
+                <NavLink to={`/products/discount/${product.sp_id}`}>
+                  <Button color="warning" className="text-white">Giảm giá</Button>
+                </NavLink>
+                &nbsp; &nbsp;
+                <NavLink to={`/products/update/${product.sp_id}`}>
+                  <Button color="info" className="text-white">Cập nhật</Button>
+                </NavLink>
+                &nbsp; &nbsp;
+                <Button color="danger" onClick={() => handleDeleteProduct(product.sp_id)}>
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}
